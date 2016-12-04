@@ -3,6 +3,14 @@ body {
   font-size: 1.2em;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 h1.center {
   text-align: center;
 }
@@ -47,4 +55,23 @@ th {
 
 td {
   border-bottom: 1px solid #ddd;
+}
+
+.footer {
+  border-top: 1px solid #999;
+  text-align:center;
+  font-size: 0.9em;
+  background-color: #eee;
+  color: #666;
+}
+
+.footer .container {
+  padding: 15px 0;
+}
+
+.footer p {
+  margin: 0;
+  font-size: .8em;
+  padding: 0;
+  line-height: 1.4em;
 }
