@@ -55,19 +55,45 @@
     (insert-file-contents archive-file)
     (cdr (read (current-buffer)))))
 
-(defun packages--archive-alist-for-json (archive-file)
+(defun packages--archive-alist-for-json (alist)
   "Return the archive alist in a form suitable for JSON encoding."
   (cl-mapcan (lambda (entry)
                (list (package-build--sym-to-keyword (car entry))
                      (package-build--pkg-info-for-json (cdr entry))))
-             (packages--archive-alist archive-file)))
+             alist))
 
-;;;###autoload
 (defun packages-archive-as-json (archive-file json-file)
   "Dump the ARCHIVE-FILE to JSON-FILE as json."
   (cl-assert (file-readable-p archive-file) t)
   (with-temp-file json-file
-    (insert (json-encode (packages--archive-alist-for-json archive-file)))))
+    (insert (json-encode (packages--archive-alist-for-json (packages--archive-alist archive-file))))))
+
+(defun packages-archives-as-json (archive-files json-file)
+  (let (al)
+    (dolist (f archive-files)
+      (setq al (append (packages--archive-alist f) al)))
+    (let ((coding-system-for-write 'utf-8))
+      (with-temp-file json-file
+        (insert (json-encode
+                 (packages--archive-alist-for-json
+                  (cl-remove-duplicates al :test (lambda (p1 p2) (eq (car p1) (car p2)))))))))))
+
+(defun packages--archive-url (elpa)
+  (format "http://elpa.emacs-china.org/%s/archive-contents" elpa))
+
+(let (archive-files)
+  (dolist (elpa '(gnu
+                  melpa
+                  melpa-stable
+                  org
+                  marmalade
+                  sunrise-commander
+                  user42))
+    (let ((url (packages--archive-url elpa))
+          (file (format "%s-archive-contents" elpa)))
+      (url-copy-file url file t)
+      (push file archive-files)))
+  (packages-archives-as-json archive-files "all.json"))
 
 (provide 'elpa-packages)
 ;;; elpa-packages.el ends here

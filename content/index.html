@@ -5,7 +5,7 @@
       <tr><th>Package</th><th>Description</th></tr>
 
       <% JSON.parse(open('all.json').read).each do |k, v| %>
-      <tr><td><%= k %></td><td><%= v['desc'] %></td></tr>
+      <tr><td><%= k %></td><td><%= h(v['desc']) %></td></tr>
       <% end %>
 
     </table>
