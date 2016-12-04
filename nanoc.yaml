@@ -1,3 +1,8 @@
+deploy:
+  default:
+    kind: rsync
+    dst:  'root@elpa.emacs-china.org:/var/elpa/packages'
+
 # The syntax to use for patterns in the Rules file. Can be either `"glob"`
 # (default) or `"legacy"`. The former will enable glob patterns, which behave
 # like Ruby’s File.fnmatch. The latter will enable Nanoc 3.x-style patterns.
