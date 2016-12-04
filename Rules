@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'json'
+
 compile '/**/*.html' do
   filter :erb
   layout '/default.*'
