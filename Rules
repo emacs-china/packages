@@ -24,6 +24,11 @@ route '/**/*.{html,md}' do
   end
 end
 
+compile '/package-search.js' do
+  filter :erb
+  write item.identifier.to_s
+end
+
 compile '/**/*' do
   write item.identifier.to_s
 end

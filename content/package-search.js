@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	$('table').filterTable({
 		label: '',
-		// FIXME Compute number of the packages
-		placeholder: 'Search 4,045 packages across 7 ELPA...'
+		placeholder: 'Search <%= JSON.parse(open("all.json").read).length %> packages across 7 ELPA...'
 	});
 });
