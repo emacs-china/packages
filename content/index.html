@@ -1,12 +1,18 @@
-<div class="wrapper">
+<div class="wrapper" ng-controller="MainCtrl">
   <div class="container">
     <h1 class="center">Packages make Emacs do amazing things</h1>
+
+    <p class="filter-table">
+      <input type="search" placeholder="Search {{count()}} packages across 7 ELPA..." name="" ng-model="keyword" ng-change="filter(keyword)">
+    </p>
+
     <table>
       <tr><th>Package</th><th>Description</th></tr>
 
-      <% JSON.parse(open('all.json').read).each do |k, v| %>
-      <tr><td><%= k %></td><td><%= h(v['desc']) %></td></tr>
-      <% end %>
+      <tr class="visible" style="display: table-row;" ng-repeat="(name, package) in packages">
+        <td class="alt"><a href="{{::package.props.url}}">{{::name}}</a></td>
+        <td class="alt">{{::package.desc}}</td>
+      </tr>
 
     </table>
   </div>
