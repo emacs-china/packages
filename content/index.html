@@ -3,18 +3,26 @@
     <h1 class="center">Packages make Emacs do amazing things</h1>
 
     <p class="filter-table">
-      <input type="search" placeholder="Search {{count()}} packages across 7 ELPA..." name="" ng-model="keyword" ng-change="filter(keyword)">
+      <input type="search" placeholder="Search {{count(null)}} packages across 7 ELPA..." name="" ng-model="keywords" ng-change="filter(keywords)">
     </p>
 
     <table>
       <tr><th>Package</th><th>Description</th></tr>
 
-      <tr class="visible" style="display: table-row;" ng-repeat="(name, package) in packages">
+      <tr class="visible" style="display: table-row;" ng-repeat="(name, package) in packages | limit: pageIndex * pageSize : pageSize">
         <td class="alt"><a href="{{::package.props.url}}">{{::name}}</a></td>
         <td class="alt">{{::package.desc}}</td>
       </tr>
 
-    </table>
+      </table>
+
+      <div class="center">
+        <a href="" ng-click="pageIndex === 0 ? false : pageIndex = 0">|<</a>
+        <a href="" ng-click="pageIndex === 0 ? false : pageIndex = pageIndex - 1"><</a>
+        {{pageCount ? pageIndex + 1 : 0}} / {{pageCount}}
+        <a href="" ng-click="pageIndex === pageCount - 1 ? false : pageIndex = pageIndex + 1">></a>
+        <a href="" ng-click="pageIndex === pageCount - 1 ? false : pageIndex = pageCount - 1">>|</a>
+      </div>
   </div>
 
   <div class="footer">
