@@ -1,7 +1,7 @@
 deploy:
   default:
     kind: rsync
-    dst:  'root@elpa.emacs-china.org:/var/elpa/packages'
+    dst:  'elpa-packages@elpa.emacs-china.org:/var/elpa/packages'
 
 # The syntax to use for patterns in the Rules file. Can be either `"glob"`
 # (default) or `"legacy"`. The former will enable glob patterns, which behave
