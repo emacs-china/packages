@@ -43,7 +43,7 @@ angular.module("ngApp", [])
         };
 
         for (var name in all) {
-          if (!remain(all[name].desc, remain(name, keywords.split(' '))).length) {
+          if (!remain(all[name].desc.toLowerCase(), remain(name.toLowerCase(), keywords.toLowerCase().split(' '))).length) {
             packages[name] = all[name];
           }
         }
