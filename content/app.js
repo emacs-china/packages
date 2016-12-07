@@ -1,18 +1,18 @@
 angular.module("ngApp", [])
   .filter('limit', function () {
-    return function (all, start, offset) {
-      var packages = {};
+    return function (packages, start, offset) {
+      var matched = {};
       var i = 0, n = 0;
 
-      for (var name in all) {
+      for (var name in packages) {
         if (i >= start && n < offset) {
-          packages[name] = all[name];
+          matched[name] = packages[name];
           n++;
         }
         i++;
       }
 
-      return packages;
+      return matched;
     };
   })
   .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
@@ -34,15 +34,16 @@ angular.module("ngApp", [])
         $scope.packages = all;
       } else {
         var packages = {};
-        var wordArr = keywords.split(' ');
-        var matchedFn = function (str) {
+
+        // return not matched
+        var remain = function (str, wordArr) {
           return wordArr.filter(function (word) {
-            return str.indexOf(word) >= 0;
-          }).length;
+            return str.indexOf(word) < 0;
+          });
         };
 
         for (var name in all) {
-          if (matchedFn(name) === wordArr.length || matchedFn(all[name].desc) === wordArr.length) {
+          if (!remain(all[name].desc, remain(name, keywords.split(' '))).length) {
             packages[name] = all[name];
           }
         }
