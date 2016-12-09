@@ -16,22 +16,47 @@ angular.module("ngApp", [])
     };
   })
   .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
-    var all = {};
-    $scope.packages = all;
+    var $cache = (function() {
+      var pool = {};
+      return {
+        set: function(packages, key) {
+          pool[key ? key : ''] = packages;
+        },
+        get: function(key) {
+          return pool[key ? key : ''];
+        },
+        prune: function() {
+          pool = {'': pool['']};
+        }
+      };
+    })();
+
+    $scope.packages = $cache;
     $scope.pageSize = 100;
 
     $http.get('all.json').success(function (content) {
-      all = content;
-      $scope.packages = all;
+      $cache.set(content);
+      $scope.packages = $cache.get();
     });
 
     $scope.count = function(packages) {
       return Object.keys(packages ? packages : $scope.packages).length;
     };
 
+    $scope.cache = function($event, keywords) {
+      if ($event.keyCode === 32) {
+        var cacheKey = keywords.split(' ').sort().join('.');
+        if (!$cache.get(cacheKey)) {
+          $cache.set($scope.packages, cacheKey);
+        }
+      }
+    };
+
+    var lastKeywords = '';
     $scope.filter = function(keywords) {
       if (!keywords) {
-        $scope.packages = all;
+        $scope.packages = $cache.get();
+        $cache.prune();
       } else {
         var packages = {};
 
@@ -42,13 +67,24 @@ angular.module("ngApp", [])
           });
         };
 
-        for (var name in all) {
-          if (!remain(all[name].desc.toLowerCase(), remain(name.toLowerCase(), keywords.toLowerCase().split(' '))).length) {
-            packages[name] = all[name];
+        // find intersection
+        var cachedKeywords = keywords.split(' ').filter(function (word) {
+          return this.wordArr.indexOf(word) >= 0;
+        }, {wordArr: lastKeywords.split(' ')}).sort().join('.');
+
+        var cachedPackages = $cache.get(cachedKeywords);
+        if (!cachedPackages) {
+          cachedPackages = $cache.get();
+        }
+
+        for (var name in cachedPackages) {
+          if (!remain(cachedPackages[name].desc.toLowerCase(), remain(name.toLowerCase(), keywords.toLowerCase().split(' '))).length) {
+            packages[name] = cachedPackages[name];
           }
         }
 
         $scope.packages = packages;
+        lastKeywords = keywords;
       }
     };
 
