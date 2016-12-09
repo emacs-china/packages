@@ -31,7 +31,7 @@ angular.module("ngApp", [])
       };
     })();
 
-    $scope.packages = $cache;
+    $scope.packages = {};
     $scope.pageSize = 100;
 
     $http.get('all.json').success(function (content) {
