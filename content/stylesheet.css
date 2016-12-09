@@ -38,6 +38,10 @@ input[type="search"][placeholder] {
   color: #666;
 }
 
+table {
+  width: 100%;
+}
+
 td, th {
   padding: 6px;
 }

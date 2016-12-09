@@ -3,7 +3,7 @@
     <h1 class="center">Packages make Emacs do amazing things</h1>
 
     <p class="filter-table">
-      <input type="search" placeholder="Search {{count(null)}} packages across 7 ELPA..." name="" ng-model="keywords" ng-change="filter(keywords)">
+      <input type="search" placeholder="Search {{count(null)}} packages across 7 ELPA..." name="" ng-model="keywords" ng-keypress="cache($event, keywords.trim())" ng-change="filter(keywords.trim())">
     </p>
 
     <table>
