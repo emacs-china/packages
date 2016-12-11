@@ -21,4 +21,8 @@ Make sure that you have [Nanoc](http://nanoc.ws/) gem installed, then simply run
 
 [![Build Status](https://travis-ci.org/emacs-china/packages.svg?branch=master)](https://travis-ci.org/emacs-china/packages)
 
-Deployment via Travis-CI will be triggered by update on the master branch.
+Travis-CI builds and deploys the site daily by
+using [Cron Jobs - Travis CI](https://docs.travis-ci.com/user/cron-jobs/). And
+update on the master branch also triggers the update.
+
+Thanks Travis-CI.
