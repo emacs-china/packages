@@ -76,19 +76,23 @@
       (with-temp-file json-file
         (insert (json-encode
                  (packages--archive-alist-for-json
-                  (cl-remove-duplicates al :test (lambda (p1 p2) (eq (car p1) (car p2)))))))))))
+                  (sort (cl-remove-duplicates al :test (lambda (p1 p2) (eq (car p1) (car p2))))
+                        (lambda (p1 p2)
+                          (string< (symbol-name (car p1))
+                                   (symbol-name (car p2))))))))))))
 
 (defun packages--archive-url (elpa)
   (format "http://elpa.emacs-china.org/%s/archive-contents" elpa))
 
 (let (archive-files)
-  (dolist (elpa '(gnu
-                  melpa
-                  melpa-stable
-                  org
-                  marmalade
-                  sunrise-commander
-                  user42))
+  (dolist (elpa (nreverse               ; Prefer GNU ELPA (`cl-remove-duplicates' keeps the last one)
+                 '(gnu
+                   melpa
+                   melpa-stable
+                   org
+                   marmalade
+                   sunrise-commander
+                   user42)))
     (let ((url (packages--archive-url elpa))
           (file (format "%s-archive-contents" elpa)))
       (url-copy-file url file t)
