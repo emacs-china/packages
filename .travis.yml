@@ -12,8 +12,9 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_93417c07a8e7_key -iv $encrypted_93417c07a8e7_iv -in .deploy_rsa.enc -out ~/.ssh/id_rsa -d
   - chmod 0600 ~/.ssh/id_rsa
   - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - sudo apt-add-repository -y ppa:ubuntu-elisp/ppa
   - sudo apt-get -qq update
-  - sudo apt-get install -y emacs
+  - sudo apt-get install -y emacs-snapshot
 
 addons:
   ssh_known_hosts: elpa.emacs-china.org
