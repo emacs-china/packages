@@ -96,7 +96,7 @@
 
 (message "-> Building all.json...")
 (let (archive-files)
-  (dolist (elpa (nreverse ; Prefer GNU ELPA (`cl-remove-duplicates' keeps the last one)
+  (dolist (elpa (reverse ; Prefer GNU ELPA (`cl-remove-duplicates' keeps the last one)
                  packages--elpas))
     (let ((url (packages--archive-url elpa))
           (file (format "%s-archive-contents" elpa)))
