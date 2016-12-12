@@ -20,7 +20,7 @@ addons:
   ssh_known_hosts: elpa.emacs-china.org
 
 install:
-  - emacs --no-site-file --batch -l elpa-packages.el && mv -v all.json content/
+  - emacs --no-site-file --batch -l elpa-packages.el && mv -v *.json content/
   - gem install nanoc
 
 script:

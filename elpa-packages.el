@@ -65,8 +65,10 @@
 (defun packages-archive-as-json (archive-file json-file)
   "Dump the ARCHIVE-FILE to JSON-FILE as json."
   (cl-assert (file-readable-p archive-file) t)
-  (with-temp-file json-file
-    (insert (json-encode (packages--archive-alist-for-json (packages--archive-alist archive-file))))))
+  (let ((coding-system-for-write 'utf-8))
+    (with-temp-file json-file
+      (insert (json-encode (packages--archive-alist-for-json
+                            (packages--archive-alist archive-file)))))))
 
 (defun packages-archives-as-json (archive-files json-file)
   (let (al)
@@ -84,20 +86,30 @@
 (defun packages--archive-url (elpa)
   (format "http://elpa.emacs-china.org/%s/archive-contents" elpa))
 
+(defconst packages--elpas '(gnu
+                            melpa
+                            melpa-stable
+                            org
+                            marmalade
+                            sunrise-commander
+                            user42))
+
+(message "-> Building all.json...")
 (let (archive-files)
-  (dolist (elpa (nreverse               ; Prefer GNU ELPA (`cl-remove-duplicates' keeps the last one)
-                 '(gnu
-                   melpa
-                   melpa-stable
-                   org
-                   marmalade
-                   sunrise-commander
-                   user42)))
+  (dolist (elpa (nreverse ; Prefer GNU ELPA (`cl-remove-duplicates' keeps the last one)
+                 packages--elpas))
     (let ((url (packages--archive-url elpa))
           (file (format "%s-archive-contents" elpa)))
       (url-copy-file url file t)
       (push file archive-files)))
   (packages-archives-as-json archive-files "all.json"))
+
+(mapc (lambda (elpa)
+        (message "-> Build JSON for %s..." elpa)
+        (packages-archive-as-json
+         (format "%s-archive-contents" elpa)
+         (format "%s.json"     elpa)))
+      packages--elpas)
 
 (provide 'elpa-packages)
 ;;; elpa-packages.el ends here
