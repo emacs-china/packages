@@ -29,6 +29,14 @@
 (require 'cl-lib)
 (require 'json)
 
+(defconst packages--elpas '(gnu
+                            melpa
+                            melpa-stable
+                            org
+                            marmalade
+                            sunrise-commander
+                            user42))
+
 (defun package-build--sym-to-keyword (s)
   "Return a version of symbol S as a :keyword."
   (intern (concat ":" (symbol-name s))))
@@ -41,6 +49,25 @@
          (type (elt info 3))
          (props (when (> (length info) 4) (elt info 4))))
     (list :ver ver
+          :deps (cl-mapcan (lambda (dep)
+                             (list (package-build--sym-to-keyword (car dep))
+                                   (cadr dep)))
+                           deps)
+          :desc desc
+          :type type
+          :props props)))
+
+(defun package-build--pkg-info-for-json2 (info)
+  "Convert INFO into a data structure which will serialize to JSON in the desired shape."
+  (let* ((vers (elt info 0))
+         (deps (elt info 1))
+         (desc (elt info 2))
+         (type (elt info 3))
+         (props (when (> (length info) 4) (elt info 4))))
+    (list :vers (cl-mapcan (lambda (ver)
+                             (list (package-build--sym-to-keyword (car ver))
+                                   (cadr ver)))
+                           vers)
           :deps (cl-mapcan (lambda (dep)
                              (list (package-build--sym-to-keyword (car dep))
                                    (cadr dep)))
@@ -62,6 +89,13 @@
                      (package-build--pkg-info-for-json (cdr entry))))
              alist))
 
+(defun packages--archive-alist-for-json2 (alist)
+  "Return the archive alist in a form suitable for JSON encoding."
+  (cl-mapcan (lambda (entry)
+               (list (package-build--sym-to-keyword (car entry))
+                     (package-build--pkg-info-for-json2 (cdr entry))))
+             alist))
+
 (defun packages-archive-as-json (archive-file json-file)
   "Dump the ARCHIVE-FILE to JSON-FILE as json."
   (cl-assert (file-readable-p archive-file) t)
@@ -69,6 +103,46 @@
     (with-temp-file json-file
       (insert (json-encode (packages--archive-alist-for-json
                             (packages--archive-alist archive-file)))))))
+
+(defun packages-archive-as-json2 (alist json-file)
+  "Dump the ARCHIVE-FILE to JSON-FILE as json."
+  (cl-assert (file-readable-p archive-file) t)
+  (let ((coding-system-for-write 'utf-8))
+    (with-temp-file json-file
+      (insert (json-encode (packages--archive-alist-for-json
+                            alist))))))
+
+(defun packages--archive-alists-merge (alist)
+  (let (res)
+    (dolist (i alist res)
+      (let* ((pkg (car i))
+             (info (cdr i))
+             (ver (car (aref info 0))))
+        (if (assq pkg res)
+            (push ver (aref (cdr (assq pkg res)) 0))
+          (push (cons pkg info) res))))))
+
+(defun packages--archive-alists ()
+  (cl-mapcan (lambda (elpa)
+               (let* ((file (format "%s-archive-contents" elpa))
+                      (al (with-temp-buffer
+                            (insert-file-contents file)
+                            (cdr (read (current-buffer))))))
+                 (cl-loop for (a . b) in al
+                          do (aset b 0 (list (list elpa (aref b 0))))
+                          collect (cons a b))))
+             packages--elpas))
+
+(defun packages-all (json-file)
+  (let ((coding-system-for-write 'utf-8))
+    (with-temp-file json-file
+      (insert (json-encode
+               (packages--archive-alist-for-json2
+                (sort (packages--archive-alists-merge
+                       (packages--archive-alists))
+                      (lambda (p1 p2)
+                        (string< (symbol-name (car p1))
+                                 (symbol-name (car p2)))))))))))
 
 (defun packages-archives-as-json (archive-files json-file)
   (let (al)
@@ -86,14 +160,6 @@
 (defun packages--archive-url (elpa)
   (format "http://elpa.emacs-china.org/%s/archive-contents" elpa))
 
-(defconst packages--elpas '(gnu
-                            melpa
-                            melpa-stable
-                            org
-                            marmalade
-                            sunrise-commander
-                            user42))
-
 (message "-> Building all.json...")
 (let (archive-files)
   (dolist (elpa (reverse ; Prefer GNU ELPA (`cl-remove-duplicates' keeps the last one)
@@ -102,7 +168,10 @@
           (file (format "%s-archive-contents" elpa)))
       (url-copy-file url file t)
       (push file archive-files)))
-  (packages-archives-as-json archive-files "all.json"))
+  ;; (packages-archives-as-json archive-files "all.json")
+  )
+
+(packages-all "all.json")
 
 (mapc (lambda (elpa)
         (message "-> Build JSON for %s..." elpa)
