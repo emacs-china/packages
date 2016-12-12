@@ -1,0 +1,26 @@
+<% Dir.chdir "content" %>
+
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>Emacs Lisp Package Archive</th>
+        <th>Packages</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>GNU ELPA</td><td><%= count_json "gnu.json" %></td></tr>
+      <tr><td>MELPA</td><td><%= count_json "melpa.json" %></td></tr>
+      <tr><td>MELPA Stable</td><td><%= count_json "melpa-stable.json" %></td></tr>
+      <tr><td>Marmalade</td><td><%= count_json "marmalade.json" %></td></tr>
+      <tr><td>Org ELPA</td><td><%= count_json "org.json" %></td></tr>
+      <tr><td>Sunrise Commander ELPA</td><td><%= count_json "sunrise-commander.json" %></td></tr>
+      <tr><td>User42 ELPA</td><td><%= count_json "user42.json" %></td></tr>
+    </tbody>
+    <tbody>
+      <tr><td>Totals</td><td><%= count_json "all.json" %></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<% Dir.chdir ".." %>

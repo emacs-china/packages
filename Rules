@@ -17,11 +17,7 @@ end
 #end
 
 route '/**/*.{html,md}' do
-  if item.identifier =~ '/index.*'
-    '/index.html'
-  else
-    item.identifier.without_ext + '/index.html'
-  end
+  item.identifier.without_ext + '.html'
 end
 
 compile '/package-search.js' do
