@@ -98,6 +98,78 @@ angular.module("ngApp", [])
 
     $scope.$watch('packages', function (newValue, oldValue) {
       $scope.pageCount = Math.ceil($scope.count(newValue) / $scope.pageSize);
-      $scope.pageIndex = 0;
+      $scope.gotoPage($scope.pageCount ? 1 : 0);
     });
+
+    $scope.pageIndexArr = [];
+    $scope.gotoPage = function(pageIndex) {
+      if ($scope.pageCount < 1) {
+        $scope.pageIndexArr = [];
+        $scope.pageIndex = 0;
+      } else if ($scope.pageCount === 1) {
+        $scope.pageIndexArr = [1];
+        $scope.pageIndex = 1;
+      } else {
+        var pageIndexArr = [];
+
+        if (typeof pageIndex === 'string') {
+          pageIndex = parseInt(pageIndex);
+          if (!pageIndex) {
+            pageIndex = 1;
+          }
+        }
+
+        var count = $scope.pageCount < 9 ? $scope.pageCount : 9;
+        var start = pageIndex - ((count-1) / 2);
+        var end = pageIndex + ((count-1) / 2);
+
+        if (pageIndex > $scope.pageCount) {
+          pageIndex = $scope.pageCount;
+        }
+
+        if (start < 1) {
+          start = 1;
+          end = count;
+        }
+
+        if (end > $scope.pageCount) {
+          end = $scope.pageCount;
+          start = $scope.pageCount > count ? ($scope.pageCount - count + 1) : 1;
+        }
+
+        for (var i = start; i <= end; i++) {
+          pageIndexArr.push(i);
+        }
+
+        $scope.pageIndexArr = pageIndexArr;
+        $scope.pageIndex = pageIndex;
+      }
+    };
+
+    $scope.selectText = function ($e) {
+      if ($e) {
+        var selectAll = false;
+
+        switch ($e.type) {
+          case 'click':
+            selectAll = true;
+            break;
+          case 'keydown':
+            if ($e.keyCode === 8  ||                      /* Backspace */
+                $e.keyCode === 13 ||                      /* Enter     */
+                $e.keyCode === 27 ||                      /* Esc       */
+                $e.keyCode === 32 ||                      /* Space     */
+                $e.keyCode === 46 ||                      /* Delete    */
+                ($e.keyCode >= 65 && $e.keyCode <= 90)) { /* a-zA-Z    */
+              selectAll = true;
+            }
+            break;
+        }
+
+        if (selectAll) {
+          $e.currentTarget.setSelectionRange(0, $e.currentTarget.value.length);
+          $e.preventDefault();
+        }
+      }
+    };
   }]);
