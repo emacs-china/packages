@@ -1,3 +1,6 @@
 # Nanoc
 /output/
 /tmp/
+
+# Emacs
+.dir-locals.el
