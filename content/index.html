@@ -10,7 +10,7 @@
       <tr><th>Package</th><th>Description</th></tr>
 
       <tr class="visible" style="display: table-row;" ng-repeat="(name, package) in packages | limit: pageIndex * pageSize : pageSize">
-        <td class="alt"><a href="/{{::name}}/">{{::name}}</a></td>
+        <td class="alt"><a href="./{{::name}}/">{{::name}}</a></td>
         <td class="alt">{{::package.desc}}</td>
       </tr>
 
