@@ -1,0 +1,34 @@
+{
+  "vers": {
+    "melpa-stable": [
+      2,
+      3
+    ],
+    "melpa": [
+      20161031,
+      1025
+    ]
+  },
+  "deps": {
+    "bind-key": [
+      1,
+      0
+    ],
+    "diminish": [
+      0,
+      44
+    ]
+  },
+  "desc": "A use-package declaration for simplifying your .emacs",
+  "type": "single",
+  "props": {
+    "url": "https://github.com/jwiegley/use-package",
+    "keywords": [
+      "dotemacs",
+      "startup",
+      "speed",
+      "config",
+      "package"
+    ]
+  }
+}

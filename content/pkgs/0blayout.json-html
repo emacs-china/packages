@@ -1,0 +1,23 @@
+{
+  "vers": {
+    "melpa-stable": [
+      1,
+      0,
+      2
+    ],
+    "melpa": [
+      20161007,
+      2307
+    ]
+  },
+  "deps": null,
+  "desc": "Layout grouping with ease",
+  "type": "single",
+  "props": {
+    "url": "https://github.com/etu/0blayout",
+    "keywords": [
+      "convenience",
+      "window-management"
+    ]
+  }
+}

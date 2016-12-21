@@ -1,0 +1,12 @@
+{
+  "vers": {
+    "melpa": [
+      20161027,
+      2140
+    ]
+  },
+  "deps": null,
+  "desc": "No description available.",
+  "type": "single",
+  "props": null
+}

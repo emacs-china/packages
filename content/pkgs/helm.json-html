@@ -1,0 +1,38 @@
+{
+  "vers": {
+    "melpa-stable": [
+      2,
+      3,
+      3
+    ],
+    "melpa": [
+      20161209,
+      753
+    ]
+  },
+  "deps": {
+    "emacs": [
+      24,
+      4
+    ],
+    "async": [
+      1,
+      9
+    ],
+    "popup": [
+      0,
+      5,
+      3
+    ],
+    "helm-core": [
+      2,
+      3,
+      3
+    ]
+  },
+  "desc": "Helm is an Emacs incremental and narrowing framework",
+  "type": "tar",
+  "props": {
+    "url": "https://emacs-helm.github.io/helm/"
+  }
+}
