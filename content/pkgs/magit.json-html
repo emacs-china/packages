@@ -1,0 +1,54 @@
+{
+  "vers": {
+    "marmalade": [
+      2,
+      4,
+      1
+    ],
+    "melpa-stable": [
+      2,
+      9,
+      0
+    ],
+    "melpa": [
+      20161210,
+      737
+    ]
+  },
+  "deps": {
+    "emacs": [
+      24,
+      4
+    ],
+    "async": [
+      20160711,
+      223
+    ],
+    "dash": [
+      20160820,
+      501
+    ],
+    "with-editor": [
+      20161201,
+      925
+    ],
+    "git-commit": [
+      20161123,
+      2204
+    ],
+    "magit-popup": [
+      20161201,
+      1352
+    ]
+  },
+  "desc": "A Git porcelain inside Emacs",
+  "type": "tar",
+  "props": {
+    "url": "https://github.com/magit/magit",
+    "keywords": [
+      "git",
+      "tools",
+      "vc"
+    ]
+  }
+}

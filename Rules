@@ -2,6 +2,11 @@
 
 require 'json'
 
+compile '/pkgs/magit.json-html' do
+  layout '/package.html'
+  write '/magit/index.html'
+end
+
 compile '/**/*.html' do
   filter :erb
   layout '/default.*'

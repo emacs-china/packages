@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= File.basename item.identifier.without_ext %></title>
+    <meta name="generator" content="Nanoc <%= Nanoc::VERSION %>">
+    <link rel="stylesheet" href="./stylesheet.css">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,width=device-width" />
+  </head>
+  <body>
+
+    <p><%= File.basename item.identifier.without_ext %>: <%= JSON.parse(yield)["desc"] %></p>
+
+  </body>
+</html>
