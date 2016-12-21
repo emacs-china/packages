@@ -2,9 +2,9 @@
 
 require 'json'
 
-compile '/pkgs/magit.json-html' do
+compile '/pkgs/*.json-html' do
   layout '/package.html'
-  write '/magit/index.html'
+  write '/' + File.basename(item.identifier.without_ext) + '/index.html'
 end
 
 compile '/**/*.html' do
