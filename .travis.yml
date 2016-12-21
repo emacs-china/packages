@@ -22,6 +22,7 @@ addons:
 
 install:
   - emacs --no-site-file --batch -l elpa-packages.el && mv -v *.json content/
+  - mkdir -p content/pkgs
   - for i in $( jq 'keys | .[]' -r content/all.json ); do jq ".[\"$i\"]" content/all.json > content/pkgs/$i.json-html; done
   - gem install nanoc
 
