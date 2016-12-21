@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><%= File.basename item.identifier.without_ext %></title>
+    <title>Emacs Packages</title>
     <meta name="generator" content="Nanoc <%= Nanoc::VERSION %>">
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,width=device-width" />
     <link rel="stylesheet" href="../stylesheet.css">
   </head>
-  <body>
-    <p><%= File.basename item.identifier.without_ext %>: <%= JSON.parse(yield)["desc"] %></p>
+  <body ng-app="ngApp">
+    <%= yield %>
     <div class="footer">
       <div class="container">
         <p>Copyright © 2016 <a href="https://emacs-china.org">Emacs China</a>.</p>
@@ -16,5 +16,5 @@
         <p>Last update at <a href="https://travis-ci.org/emacs-china/packages" title="Travis-CI updates the site every day. Thanks Travis-CI."><%= Time.now.to_s %></a>.</p>
       </div>
     </div>
-  </body>
+</body>
 </html>

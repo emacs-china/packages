@@ -7,6 +7,12 @@ compile '/pkgs/*.json-html' do
   write '/' + File.basename(item.identifier.without_ext) + '/index.html'
 end
 
+compile '/about.html' do
+  filter :erb
+  layout '/about.html'
+  write '/about/index.html'
+end
+
 compile '/**/*.html' do
   filter :erb
   layout '/default.*'
