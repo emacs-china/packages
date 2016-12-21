@@ -10,12 +10,6 @@
 - [Sunrise Commander ELPA](http://joseito.republika.pl/sunrise-commander/)
 - [User42 ELPA](http://user42.tuxfamily.org/elpa/index.html)
 
-## Build
-
-Make sure that you have [Nanoc](http://nanoc.ws/) gem installed, then simply run
-
-    nanoc
-
 ## API
 
 The API is updated once a day.
@@ -30,6 +24,14 @@ The API is updated once a day.
 | Sunrise Commander ELPA | https://elpa.emacs-china.org/packages/sunrise-commander.json |
 | User42 ELPA            | https://elpa.emacs-china.org/packages/user42.json            |
 | **All of above**       | https://elpa.emacs-china.org/packages/all.json               |
+
+## Build
+
+Make sure that you have [Nanoc](http://nanoc.ws/) gem installed, then simply run
+
+    nanoc
+
+from shell to build the site.
 
 ## Deploy
 
