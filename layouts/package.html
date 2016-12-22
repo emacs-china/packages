@@ -2,13 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><%= pkg_name item %></title>
+    <title><%= pkg_name %></title>
     <meta name="generator" content="Nanoc <%= Nanoc::VERSION %>">
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,width=device-width" />
     <link rel="stylesheet" href="../stylesheet.css">
   </head>
   <body>
-    <p><%= pkg_name item %>: <%= JSON.parse(yield)["desc"] %></p>
+    <h1><%= pkg_name %></h2>
+    <ul>
+      <li>Description: <%= JSON.parse(yield)["desc"] %></li>
+      <li>Home page: <%= pkg_homepage(yield) %></li>
+      <li>Versions: <%= pkg_vers(yield) %></li>
+      <li>Dependencies: <%= pkg_deps(yield) %></li>
+    </ul>
     <div class="footer">
       <div class="container">
         <p>Copyright © 2016 <a href="https://emacs-china.org">Emacs China</a>.</p>

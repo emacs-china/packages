@@ -3,7 +3,7 @@
 # FIXME There must be a better way, this one is awkward and slow
 compile '/pkgs/*.json-html' do
   layout '/package.html'
-  write '/' + pkg_name(item) + '/index.html'
+  write '/' + pkg_name + '/index.html'
 end
 
 compile '/about.html' do
