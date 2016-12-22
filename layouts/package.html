@@ -8,13 +8,22 @@
     <link rel="stylesheet" href="../stylesheet.css">
   </head>
   <body>
-    <h1><%= pkg_name %></h2>
-    <ul>
-      <li>Description: <%= JSON.parse(yield)["desc"] %></li>
-      <li>Home page: <%= pkg_homepage(yield) %></li>
-      <li>Versions: <%= pkg_vers(yield) %></li>
-      <li>Dependencies: <%= pkg_deps(yield) %></li>
-    </ul>
+    <div class="nav">
+      <p>
+        <a href="../">Home</a>
+        <a href="../about/">About</a>
+        <a href="https://github.com/emacs-china/packages">GitHub</a>
+      </p>
+    </div>
+    <div class="container">
+      <h1><%= pkg_name %></h2>
+      <ul>
+        <li>Description: <%= JSON.parse(yield)["desc"] %></li>
+        <li>Home page: <%= pkg_homepage(yield) %></li>
+        <li>Versions: <%= pkg_vers(yield) %></li>
+        <li>Dependencies: <%= pkg_deps(yield) %></li>
+      </ul>
+    </div>
     <div class="footer">
       <div class="container">
         <p>Copyright © 2016 <a href="https://emacs-china.org">Emacs China</a>.</p>

@@ -15,6 +15,11 @@ h1.center {
   text-align: center;
 }
 
+.nav {
+  width: 960px;
+  margin: 0 auto;
+}
+
 .container {
   padding: 20px;
   width: 960px;
