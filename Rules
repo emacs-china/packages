@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'json'
-
+# FIXME There must be a better way, this one is awkward and slow
 compile '/pkgs/*.json-html' do
   layout '/package.html'
-  write '/' + File.basename(item.identifier.without_ext) + '/index.html'
+  write '/' + pkg_name(item) + '/index.html'
 end
 
 compile '/about.html' do
