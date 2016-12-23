@@ -62,6 +62,13 @@ td {
   border-bottom: 1px solid #ddd;
 }
 
+pre {
+  background: #fafafa;
+  padding: 15px;
+  border: 1px solid #dadada;
+  overflow-y: auto;
+}
+
 .footer {
   border-top: 1px solid #999;
   text-align:center;

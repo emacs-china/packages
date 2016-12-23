@@ -38,3 +38,12 @@ def pkg_vers json_str
     '(none)'
   end
 end
+
+def pkg_full_desc pkg_name
+  file = "content/pkgs/" + pkg_name + "-readme.txt"
+  if File.exist?(file)
+    html_escape(open(file).read)
+  else
+    '(none)'
+  end
+end

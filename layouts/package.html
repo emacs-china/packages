@@ -16,13 +16,15 @@
       </p>
     </div>
     <div class="container">
-      <h1><%= pkg_name %></h2>
+      <h2><%= pkg_name %></h2>
       <ul>
-        <li>Description: <%= JSON.parse(yield)["desc"] %></li>
+        <li>Description: <%= html_escape JSON.parse(yield)["desc"] %></li>
         <li>Home page: <%= pkg_homepage(yield) %></li>
         <li>Versions: <%= pkg_vers(yield) %></li>
         <li>Dependencies: <%= pkg_deps(yield) %></li>
       </ul>
+      <h2>Full description</h2>
+      <pre><%= pkg_full_desc pkg_name %></pre>
     </div>
     <div class="footer">
       <div class="container">

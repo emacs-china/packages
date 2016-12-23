@@ -18,6 +18,9 @@ compile '/index.html' do
   write '/index.html'
 end
 
+compile '/**/*.txt' do
+end
+
 compile '/**/*' do
   write item.identifier.to_s
 end
