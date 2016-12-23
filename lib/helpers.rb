@@ -1,4 +1,5 @@
 include Nanoc::Helpers::HTMLEscape
+include Nanoc::Helpers::LinkTo
 
 require 'json'
 
@@ -13,8 +14,7 @@ end
 def pkg_homepage json_str
   json = JSON.parse(json_str)
   if json["props"] && json["props"]["url"]
-    # TODO Clickable
-    json["props"]["url"]
+    link_to(json["props"]["url"], json["props"]["url"])
   else
     '(none)'
   end
