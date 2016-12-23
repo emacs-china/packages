@@ -23,7 +23,7 @@ end
 def pkg_deps json_str
   json = JSON.parse(json_str)
   if json["deps"]
-    json["deps"].keys.join(', ')
+    json["deps"].map{|k,v| k + '-' + v.join('.')}.join(", ")
   else
     '(none)'
   end
@@ -32,8 +32,7 @@ end
 def pkg_vers json_str
   json = JSON.parse(json_str)
   if json["vers"]
-    # TODO Show version number as well
-    json["vers"].keys.join(', ')
+    json["vers"].map{|k,v| k + '-' + v.join('.')}.join(", ")
   else
     '(none)'
   end
