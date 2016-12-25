@@ -3,6 +3,8 @@ include Nanoc::Helpers::LinkTo
 
 require 'json'
 
+$all_packages_json = JSON.parse(open("content/all.json").read)
+
 def count_json file
   JSON.parse(open(file).read).length
 end
@@ -23,7 +25,7 @@ end
 def pkg_deps json_str
   json = JSON.parse(json_str)
   if json["deps"]
-    json["deps"].map{|k,v| k + '-' + v.join('.')}.join(", ")
+    json["deps"].map{|k,v| (kv = k + '-' + v.join('.'); $all_packages_json.has_key?(k) ? link_to(kv, "../#{k}/") : kv)}.join(", ")
   else
     '(none)'
   end
@@ -32,7 +34,9 @@ end
 def pkg_vers json_str
   json = JSON.parse(json_str)
   if json["vers"]
-    json["vers"].map{|k,v| k + '-' + v.join('.')}.join(", ")
+    name = pkg_name
+    type = json["type"] == "single" ? "el" : "tar"
+    json["vers"].map{|k,v| version = v.join('.'); link_to(version, "https://elpa.emacs-china.org/#{k}/#{name}-#{version}.#{type}") + " (#{k})"}.join(", ")
   else
     '(none)'
   end
