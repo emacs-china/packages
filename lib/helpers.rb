@@ -53,7 +53,7 @@ end
 def pkg_deps json_str
   json = JSON.parse(json_str)
   if json["deps"]
-    json["deps"].map{|k,v| (kv = k + '-' + v.join('.'); $all_packages_json.has_key?(k) ? link_to(kv, "../#{k}/") : kv)}.join(", ")
+    json["deps"].map{ |k,v| (kv = k + '-' + v.join('.'); $all_packages_json.has_key?(k) ? link_to(kv, "../#{k}/") : kv) }.join(", ")
   else
     '(none)'
   end
@@ -63,18 +63,18 @@ def pkg_vers json_str
   json = JSON.parse(json_str)
   if json["vers"]
     name = pkg_name
-    type = json["type"] == "single" ? "el" : "tar"
-    json["vers"].map{|k,v|
+    json["vers"].map { |k,v|
+      elpa = k
       type = pkg_json(name, k)['type'] == "single" ? "el" : "tar"
       version = v.join('.')
-      link_to(version, "https://elpa.emacs-china.org/#{k}/#{name}-#{version}.#{type}") + " (#{k})"}.join(", ")
+      link_to(version, "https://elpa.emacs-china.org/#{elpa}/#{name}-#{version}.#{type}") + " (#{elpa})" }.join(", ")
   else
     '(none)'
   end
 end
 
 def pkg_full_desc pkg_name
-  file = "content/pkgs/" + pkg_name + "-readme.txt"
+  file = "content/pkgs/#{pkg_name}-readme.txt"
   if File.exist?(file)
     html_escape(open(file).read)
   else
