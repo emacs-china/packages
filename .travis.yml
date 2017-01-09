@@ -16,6 +16,9 @@ before_install:
   - sudo apt-add-repository -y ppa:ubuntu-elisp/ppa
   - sudo apt-get -qq update
   - sudo apt-get install -y emacs-snapshot
+  - gem install nanoc
+  # Try to resolve https://travis-ci.org/emacs-china/packages/jobs/190213194#L5352
+  - gem install nokogiri
 
 addons:
   ssh_known_hosts: elpa.emacs-china.org
@@ -26,7 +29,6 @@ install:
   - for i in $( jq 'keys | .[]' -r content/all.json ); do jq ".[\"$i\"]" content/all.json > content/pkgs/$i.json-html; done
   - rsync -zarv --include="*/" --include="*.txt" --exclude="*" elpa-packages@elpa.emacs-china.org:/var/elpa-packages/ tmp
   - for i in tmp/*; do mv $i/* content/pkgs/; done
-  - gem install nanoc
 
 script:
   - nanoc
