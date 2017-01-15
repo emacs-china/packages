@@ -29,6 +29,9 @@
 (require 'cl-lib)
 (require 'json)
 
+;; Turn on debug
+(setq debug-on-error t)
+
 (defconst packages--elpas '(gnu
                             melpa
                             melpa-stable
@@ -47,7 +50,13 @@
          (deps (elt info 1))
          (desc (elt info 2))
          (type (elt info 3))
-         (props (when (> (length info) 4) (elt info 4))))
+         (props (when (> (length info) 4)
+                  ;; Delete some slots from user42's archive-contents
+                  ;; since they breaks `json-encode' and unused.
+                  (cl-delete-if
+                   (lambda (i)
+                     (memq (car i) '(:authors :maintainer)))
+                   (elt info 4)))))
     (list :ver ver
           :deps (cl-mapcan (lambda (dep)
                              (list (package-build--sym-to-keyword (car dep))
@@ -63,7 +72,13 @@
          (deps (elt info 1))
          (desc (elt info 2))
          (type (elt info 3))
-         (props (when (> (length info) 4) (elt info 4))))
+         (props (when (> (length info) 4)
+                  ;; Delete some slots from user42's archive-contents
+                  ;; since they breaks `json-encode' and unused.
+                  (cl-delete-if
+                   (lambda (i)
+                     (memq (car i) '(:authors :maintainer)))
+                   (elt info 4)))))
     (list :vers (cl-mapcan (lambda (ver)
                              (list (package-build--sym-to-keyword (car ver))
                                    (cadr ver)))
