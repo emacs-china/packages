@@ -1,6 +1,6 @@
 ;;; elpa-packages.el --- Tools for collect information on ELPA Packages  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2016  Chunyang Xu
+;; Copyright (C) 2016, 2017  Chunyang Xu
 
 ;; Author: Chunyang Xu <mail@xuchunyang.me>
 ;; Keywords: tools
