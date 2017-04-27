@@ -98,6 +98,44 @@ angular.module("ngApp", [])
 
     $scope.$watch('packages', function (newValue, oldValue) {
       $scope.pageCount = Math.ceil($scope.count(newValue) / $scope.pageSize);
-      $scope.pageIndex = 0;
+      $scope.gotoPage($scope.pageCount ? 1 : 0);
     });
+
+    $scope.pageIndexArr = [];
+    $scope.gotoPage = function(pageIndex) {
+      if ($scope.pageCount < 1) {
+        $scope.pageIndexArr = [];
+        $scope.pageIndex = 0;
+      } else if ($scope.pageCount === 1) {
+        $scope.pageIndexArr = [1];
+        $scope.pageIndex = 1;
+      } else {
+        var pageIndexArr = [];
+        var count = $scope.pageCount < 9 ? $scope.pageCount : 9;
+        var start = pageIndex - ((count-1) / 2);
+        var end = pageIndex + ((count-1) / 2);
+
+        if (pageIndex > $scope.pageCount) {
+          pageIndex = $scope.pageCount;
+        }
+
+        if (start < 1) {
+          start = 1;
+          end = count;
+        }
+
+        if (end > $scope.pageCount) {
+          end = $scope.pageCount;
+          start = $scope.pageCount > count ? ($scope.pageCount - count + 1) : 1;
+        }
+
+        for (var i = start; i <= end; i++) {
+          pageIndexArr.push(i);
+        }
+
+        $scope.pageIndexArr = pageIndexArr;
+        $scope.pageIndex = pageIndex;
+      }
+    };
+
   }]);
