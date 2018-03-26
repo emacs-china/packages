@@ -12,6 +12,7 @@ $melpa_stable_packages_json = JSON.parse(open("content/melpa-stable.json").read)
 $marmalade_packages_json    = JSON.parse(open("content/marmalade.json").read)
 $user42_packages_json       = JSON.parse(open("content/user42.json").read)
 $sunrise_commander_packages_json     = JSON.parse(open("content/sunrise-commander.json").read)
+$emacswiki_packages_json = JSON.parse(open("content/emacswiki.json").read)
 
 def pkg_json(pkg_name, elpa_name)
   json = case elpa_name
@@ -29,6 +30,8 @@ def pkg_json(pkg_name, elpa_name)
            $user42_packages_json
          when 'sunrise-commander'
            $sunrise_commander_packages_json
+         when 'emacswiki'
+           $emacswiki_packages_json
          end
   json[pkg_name]
 end
