@@ -174,7 +174,7 @@
                                    (symbol-name (car p2))))))))))))
 
 (defun packages--archive-url (elpa)
-  (format "http://elpa.emacs-china.org/%s/archive-contents" elpa))
+  (format "https://mirrors.tuna.tsinghua.edu.cn/elpa/%s/archive-contents" elpa))
 
 (message "-> Building all.json...")
 (let (archive-files)
