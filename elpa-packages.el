@@ -38,7 +38,8 @@
                             org
                             marmalade
                             sunrise-commander
-                            user42))
+                            user42
+                            emacswiki))
 
 (defun package-build--sym-to-keyword (s)
   "Return a version of symbol S as a :keyword."
